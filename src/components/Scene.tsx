@@ -225,7 +225,6 @@ export default function Scene() {
           <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#06B6D4" />
           <pointLight position={[0, 0, 0]} intensity={2} color="#3B82F6" distance={10} />
 
-          <FloatingArtifacts />
           <Particles />
           <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
         </Suspense>

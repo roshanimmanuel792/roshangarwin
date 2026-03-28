@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Skills from "@/components/Skills";
@@ -37,6 +37,32 @@ export default function ScrollSections() {
 
   const videoRef        = useRef<HTMLVideoElement>(null);
   const contactBtnRef   = useMagnetic<HTMLButtonElement>(14, 80);
+  const contactSectionRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: contactSectionRef,
+    // Start animation slightly later and finish exactly when element is centered
+    offset: ["start bottom", "center center"] 
+  });
+
+  // Extremely smooth easing using a custom cubic-bezier string isn't directly supported in useTransform arrays,
+  // but we can map the values across multiple steps to create an easing curve, making it start fast and slow down perfectly
+  const leftHandX = useTransform(
+    scrollYProgress, 
+    [0, 0.4, 0.7, 0.95, 1], 
+    ["-100%", "-60%", "-30%", "-5%", "0%"]
+  );
+  
+  const rightHandX = useTransform(
+    scrollYProgress, 
+    [0, 0.4, 0.7, 0.95, 1], 
+    ["100%", "60%", "30%", "5%", "0%"]
+  );
+  
+  // Text fading in slowly right as the hands lock into place
+  const textOpacity = useTransform(scrollYProgress, [0.8, 0.95, 1], [0, 0.5, 1]);
+  const textScale = useTransform(scrollYProgress, [0.8, 1], [0.85, 1]);
+  const textY = useTransform(scrollYProgress, [0.8, 1], [40, 0]);
 
   return (
     <div className="w-full text-white font-sans tracking-wide">
@@ -147,49 +173,69 @@ export default function ScrollSections() {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-white/[0.02] via-transparent to-transparent pointer-events-none" />
 
-        <div className="relative z-10 max-w-4xl mx-auto">
-          {/* header */}
+        <div className="relative z-10 max-w-5xl mx-auto">
+          {/* Animated Connect Section */}
+          <div 
+            ref={contactSectionRef} 
+            className="relative w-full h-[50vh] min-h-[350px] mb-12 flex flex-col items-center justify-center overflow-hidden rounded-3xl border border-white/[0.08] bg-black"
+          >
+            {/* Background Glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10 blur-3xl -z-10" />
+
+            {/* Left Hand Split */}
+            <motion.div 
+              className="absolute left-0 top-0 w-1/2 h-full overflow-hidden"
+              style={{ x: leftHandX }}
+            >
+              <img 
+                src="/lets-connect-image.webp" 
+                alt="" 
+                className="absolute left-0 top-0 w-[200%] max-w-none h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10" />
+            </motion.div>
+
+            {/* Right Hand Split */}
+            <motion.div 
+              className="absolute right-0 top-0 w-1/2 h-full overflow-hidden"
+              style={{ x: rightHandX }}
+            >
+              <img 
+                src="/lets-connect-image.webp" 
+                alt="" 
+                className="absolute right-0 top-0 w-[200%] max-w-none h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/10" />
+            </motion.div>
+
+            {/* Dark overlay for readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80 pointer-events-none z-10" />
+
+            {/* Text Overlay (appears as hands touch) */}
+            <motion.div 
+              style={{ opacity: textOpacity, scale: textScale, y: textY }}
+              className="relative z-20 text-center pointer-events-none drop-shadow-2xl flex flex-col items-center justify-center"
+            >
+              <p className="text-[10px] md:text-sm tracking-[0.4em] uppercase text-white/90 font-bold mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                Get In Touch
+              </p>
+              <h2 className="text-5xl md:text-7xl lg:text-[8rem] font-black uppercase leading-tight text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                Let&apos;s Connect
+              </h2>
+            </motion.div>
+          </div>
+
+          {/* Subtext below the hero */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
             className="mb-14 text-center"
           >
-            <p className="text-[9px] tracking-[0.4em] uppercase text-white/25 font-medium mb-4">
-              Get In Touch
-            </p>
-            <h2 className="text-5xl md:text-8xl font-black uppercase leading-tight text-white">
-              Let&apos;s Connect
-            </h2>
-            <p className="text-white/35 mt-4 max-w-md mx-auto text-sm md:text-base">
+            <p className="text-white/35 max-w-md mx-auto text-sm md:text-base">
               Interested in collaborating or discussing web development opportunities? Feel free to reach out.
             </p>
-          </motion.div>
-
-          {/* Decorative Image */}
-          <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="mb-16 flex justify-center"
-          >
-            <div className="relative w-full max-w-lg">
-              {/* Glow effect behind image */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-cyan-500/30 to-blue-500/20 blur-2xl rounded-2xl -z-10" />
-              
-              {/* Image container with border */}
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm">
-                <img
-                  src="/lets-connect-image.webp"
-                  alt="Let's Connect"
-                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
-                />
-                {/* Overlay gradient for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-              </div>
-            </div>
           </motion.div>
 
 
