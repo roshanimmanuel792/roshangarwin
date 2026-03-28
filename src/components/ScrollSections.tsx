@@ -42,7 +42,7 @@ export default function ScrollSections() {
   const { scrollYProgress } = useScroll({
     target: contactSectionRef,
     // Start animation slightly later and finish exactly when element is centered
-    offset: ["start bottom", "center center"] 
+    offset: ["start end", "center center"] 
   });
 
   // Extremely smooth easing using a custom cubic-bezier string isn't directly supported in useTransform arrays,
@@ -182,30 +182,30 @@ export default function ScrollSections() {
             {/* Background Glow */}
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10 blur-3xl -z-10" />
 
-            {/* Left Hand Split */}
+            {/* Left Hand Split - fine-tuned to capture just the left fingers (approx 52% of width) */}
             <motion.div 
-              className="absolute left-0 top-0 w-1/2 h-full overflow-hidden"
+              className="absolute left-0 top-0 w-[52%] h-full overflow-hidden"
               style={{ x: leftHandX }}
             >
               <img 
                 src="/lets-connect-image.webp" 
                 alt="" 
-                className="absolute left-0 top-0 w-[200%] max-w-none h-full object-cover object-center"
+                className="absolute left-0 top-0 w-[192.3%] max-w-none h-full object-cover object-left"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
             </motion.div>
 
-            {/* Right Hand Split */}
+            {/* Right Hand Split - remaining 48% */}
             <motion.div 
-              className="absolute right-0 top-0 w-1/2 h-full overflow-hidden"
+              className="absolute right-0 top-0 w-[48%] h-full overflow-hidden"
               style={{ x: rightHandX }}
             >
               <img 
                 src="/lets-connect-image.webp" 
                 alt="" 
-                className="absolute right-0 top-0 w-[200%] max-w-none h-full object-cover object-center"
+                className="absolute right-0 top-0 w-[208.33%] max-w-none h-full object-cover object-right"
               />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/10" />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
             </motion.div>
 
             {/* Dark overlay for readability */}
