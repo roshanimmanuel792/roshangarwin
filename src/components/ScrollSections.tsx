@@ -8,6 +8,7 @@ import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import SoundToggle from "@/components/SoundToggle";
+import ScrambleText from "@/components/ScrambleText";
 import { useMagnetic } from "@/hooks/useMagnetic";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -75,9 +76,13 @@ export default function ScrollSections() {
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="text-center"
         >
-          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4 leading-none text-white">
-            <span className="block">HARISH</span>
-            <span className="block text-white/90">COSTA</span>
+          <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4 leading-none text-white cursor-default">
+            <span className="block">
+              <ScrambleText text="HARISH" scrambleOnMount={true} />
+            </span>
+            <span className="block text-white/90">
+              <ScrambleText text="COSTA" scrambleOnMount={true} />
+            </span>
           </h1>
           <motion.p
             initial={{ opacity: 0 }}
