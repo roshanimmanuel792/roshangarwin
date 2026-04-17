@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "Portfolio of Harish Costa - Software Developer, Python, Web Development, System Troubleshooting. Based in Mangalore, India.",
 };
 
+import FooterAvatar from '../components/FooterAvatar';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,6 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <FooterAvatar />
       </body>
     </html>
   );

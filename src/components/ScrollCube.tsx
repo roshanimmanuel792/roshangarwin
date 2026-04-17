@@ -18,23 +18,21 @@ const MOVES = {
   "F'": { axis: "z", layer: 1, direction: -1 },
   B: { axis: "z", layer: -1, direction: 1 },
   "B'": { axis: "z", layer: -1, direction: -1 },
-};
+  // Middle-layer moves (M, E, S)
+  M: { axis: "x", layer: 0, direction: 1 },
+  "M'": { axis: "x", layer: 0, direction: -1 },
+  E: { axis: "y", layer: 0, direction: 1 },
+  "E'": { axis: "y", layer: 0, direction: -1 },
+  S: { axis: "z", layer: 0, direction: 1 },
+  "S'": { axis: "z", layer: 0, direction: -1 },
+} as const;
 
-const SCRAMBLE_SEQUENCE = [
+const SCRAMBLE_SEQUENCE: (keyof typeof MOVES)[] = [
   "R", "U", "R'", "F", "L'", "B", "D", "M", "E'", "S",
 ];
 
 export default function ScrollCubeIndicator({ progress }: { progress: number }) {
-  return (
-    <div>
-      <Canvas camera={{ position: [5, 5, 8] }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight color="#FFFFFF" position={[10, 10, 15]} />
-        <Stars />
-        <RubikCube progress={progress} />
-      </Canvas>
-    </div>
-  );
+    return <div></div>;
 }
 
 function RubikCube({ progress }: { progress: number }) {
@@ -45,7 +43,12 @@ function RubikCube({ progress }: { progress: number }) {
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
         for (let z = -1; z <= 1; z++) {
-          layers.push({ position: [x, y, z] });
+          const mesh = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.MeshStandardMaterial({ color: 0xffffff })
+          );
+          mesh.position.set(x, y, z);
+          layers.push(mesh);
         }
       }
     }
@@ -66,7 +69,12 @@ function RubikCube({ progress }: { progress: number }) {
       if (idx === moveProgress) {
         const { axis, direction } = MOVES[move];
         cubes.forEach((cube) => {
-          cube.rotation = direction * Math.PI / 2;
+          const axisVector = new THREE.Vector3(
+            axis === 'x' ? 1 : 0,
+            axis === 'y' ? 1 : 0,
+            axis === 'z' ? 1 : 0
+          );
+          cube.setRotationFromAxisAngle(axisVector, direction * Math.PI / 2);
         });
       }
     });
