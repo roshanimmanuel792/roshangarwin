@@ -1,11 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollCubeIndicator from "./ScrollCube";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Dynamic require for client-side Three.js
+let Suspense: any;
+try {
+  Suspense = require("react").Suspense;
+} catch (e) {
+  Suspense = null;
+}
 
 // ─── Experience data ───────────────────────────────────────────────────────────
 const EXPERIENCE_DATA = [
@@ -32,6 +41,7 @@ export default function Experience() {
   const experienceBlockRef = useRef<HTMLDivElement>(null);
   const stickyWrapRef      = useRef<HTMLDivElement>(null);
   const cardRefs           = useRef<(HTMLDivElement | null)[]>([]);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const block   = experienceBlockRef.current;
@@ -48,6 +58,17 @@ export default function Experience() {
         trigger: block,
         start: "top bottom",
         end: "top top",
+        scrub: true,
+      },
+    });
+
+    // ── Scroll progress tracker for cube ──────────────────────────────────
+    gsap.to({}, {
+      scrollTrigger: {
+        trigger: block,
+        start: "top 10%",
+        end: "bottom bottom",
+        onUpdate: (self) => setScrollProgress(self.progress),
         scrub: true,
       },
     });
@@ -97,10 +118,10 @@ export default function Experience() {
       {/* sticky horizontal scroll wrapper */}
       <div
         ref={stickyWrapRef}
-        className="sticky top-0 h-screen w-full overflow-hidden bg-black flex"
+        className="sticky top-0 h-screen w-full overflow-hidden bg-black flex relative"
       >
         {/* LEFT: label column */}
-        <div className="hidden md:flex flex-col justify-center items-start w-[38%] h-full px-12 lg:px-20 flex-shrink-0 border-r border-white/[0.06] relative z-10">
+        <div className="hidden md:flex flex-col justify-start items-start w-[38%] h-full px-12 lg:px-20 flex-shrink-0 border-r border-white/[0.06] relative z-10">
           <span className="absolute text-[18vw] font-black uppercase tracking-tighter text-white/[0.02] leading-none select-none pointer-events-none left-6 top-1/2 -translate-y-1/2">
             WORK
           </span>
@@ -122,13 +143,25 @@ export default function Experience() {
             </p>
 
             {/* index dots */}
-            <div className="flex gap-3 mt-10">
+            <div className="flex gap-3 mt-10 mb-12">
               {EXPERIENCE_DATA.map((_, i) => (
                 <div
                   key={i}
                   className="w-1.5 h-1.5 rounded-full bg-white/20 border border-white/10"
                 />
               ))}
+            </div>
+
+            {/* 3D Rubik's Cube Scroll Indicator */}
+            <div className="relative w-52 h-52 mx-auto">
+              <ScrollCubeIndicator progress={scrollProgress} />
+            </div>
+
+            {/* Progress indicator text */}
+            <div className="mt-8 text-center">
+              <p className="text-[10px] tracking-[0.3em] uppercase font-bold text-white/30">
+                Scroll to Scramble
+              </p>
             </div>
           </motion.div>
         </div>
