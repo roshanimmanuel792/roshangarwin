@@ -18,7 +18,6 @@ const MOVES = {
   "F'": { axis: "z", layer: 1, direction: -1 },
   B: { axis: "z", layer: -1, direction: 1 },
   "B'": { axis: "z", layer: -1, direction: -1 },
-  // Middle-layer moves (M, E, S)
   M: { axis: "x", layer: 0, direction: 1 },
   "M'": { axis: "x", layer: 0, direction: -1 },
   E: { axis: "y", layer: 0, direction: 1 },
@@ -58,7 +57,6 @@ function RubikCube({ progress }: { progress: number }) {
   useFrame(() => {
     if (!groupRef.current) return;
 
-    // Use scramble sequence to apply moves
     const moveProgress = Math.min(
       Math.floor(progress * SCRAMBLE_SEQUENCE.length),
       SCRAMBLE_SEQUENCE.length - 1
