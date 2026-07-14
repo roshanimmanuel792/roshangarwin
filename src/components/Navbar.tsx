@@ -65,7 +65,7 @@ export default function Navbar() {
           className="relative group"
           aria-label="Back to top"
         >
-          <span className="text-xl font-black tracking-tighter text-white">HC.</span>
+          <span className="text-xl font-black tracking-tighter text-white">RI.</span>
           <span className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full transition-all duration-300 bg-white/40" />
         </a>
 

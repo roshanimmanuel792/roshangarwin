@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Harish Costa | Full Stack Developer",
-  description: "Portfolio of Harish Costa - Software Developer, Python, Web Development, System Troubleshooting. Based in Mangalore, India.",
+  title: "Roshan Immanuel | Full Stack Developer",
+  description: "Portfolio of Roshan Immanuel - Software Developer, Python, Web Development, System Troubleshooting. Based in Mangalore, India.",
 };
 
 import FooterAvatar from '../components/FooterAvatar';

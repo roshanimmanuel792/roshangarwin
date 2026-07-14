@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 import ScrollSections from "@/components/ScrollSections";
 import Navbar from "@/components/Navbar";
 import CustomCursor from "@/components/CustomCursor";
+import InteractiveTerminal from "@/components/InteractiveTerminal";
+import MatrixRain from "@/components/MatrixRain";
+import ParticleTrail from "@/components/ParticleTrail";
 
 // Dynamically import the 3D scene to prevent SSR issues with Three.js
 const Scene = dynamic(() => import("@/components/Scene"), { ssr: false });
@@ -16,6 +19,12 @@ export default function Home() {
         <Scene />
       </div>
 
+      {/* Matrix rain canvas background effect (toggled from CLI shell) */}
+      <MatrixRain />
+
+      {/* Mouse particle trail */}
+      <ParticleTrail />
+
       {/* Fixed Navbar */}
       <Navbar />
 
@@ -26,6 +35,9 @@ export default function Home() {
       <div className="relative z-10 w-full">
         <ScrollSections />
       </div>
+
+      {/* Retro CLI terminal shell */}
+      <InteractiveTerminal />
     </main>
   );
 }

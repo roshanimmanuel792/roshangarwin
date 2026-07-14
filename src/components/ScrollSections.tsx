@@ -78,10 +78,10 @@ export default function ScrollSections() {
         >
           <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4 leading-none text-white cursor-default">
             <span className="block">
-              <ScrambleText text="HARISH" scrambleOnMount={true} />
+              <ScrambleText text="ROSHAN" scrambleOnMount={true} />
             </span>
             <span className="block text-white/90">
-              <ScrambleText text="COSTA" scrambleOnMount={true} />
+              <ScrambleText text="IMMANUEL" scrambleOnMount={true} />
             </span>
           </h1>
           <motion.p
@@ -254,10 +254,10 @@ export default function ScrollSections() {
             <div className="relative rounded-xl p-6 border border-white/[0.06] bg-white/[0.02]">
               <p className="text-[9px] uppercase tracking-[0.3em] font-medium text-white/25 mb-3">Email</p>
               <a
-                href="mailto:harish.costa@example.com"
+                href="mailto:roshanimmanuel.work@gmail.com"
                 className="text-lg md:text-xl font-medium text-white hover:text-white/70 transition-colors break-all"
               >
-                harish.costa@email.com
+                roshanimmanuel.work@gmail.com
               </a>
             </div>
 
@@ -313,7 +313,7 @@ export default function ScrollSections() {
             onSubmit={(e) => {
               e.preventDefault();
               const data = new FormData(e.currentTarget);
-              window.location.href = `mailto:harish.costa@email.com?subject=Portfolio%20Contact%20from%20${encodeURIComponent(data.get("name") as string)}&body=${encodeURIComponent(data.get("message") as string)}`;
+              window.location.href = `mailto:roshanimmanuel.work@gmail.com?subject=Portfolio%20Contact%20from%20${encodeURIComponent(data.get("name") as string)}&body=${encodeURIComponent(data.get("message") as string)}`;
             }}
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
@@ -361,7 +361,7 @@ export default function ScrollSections() {
 
           {/* mini footer */}
           <div className="mt-20 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] text-white/20 uppercase tracking-widest">
-            <span>© {new Date().getFullYear()} Harish Costa — All rights reserved.</span>
+            <span>© {new Date().getFullYear()} Roshan Immanuel — All rights reserved.</span>
             <a
               href="https://github.com"
               target="_blank"

@@ -1,4 +1,4 @@
-# Harish Costa - Portfolio
+# Roshan Immanuel - Portfolio
 
 ## Changes Made
 - Added Hand of God interactive split image in the Let's Connect section.
