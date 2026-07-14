@@ -21,11 +21,11 @@
 }
 
 .pikaImage img {
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    width: auto;
-    height: auto;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    image-rendering: auto;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
 }
 
 .pikaImg {
